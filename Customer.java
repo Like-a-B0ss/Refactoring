@@ -19,39 +19,11 @@ public class Customer {
         return _name;
     }
 
-    public String statement() {
-        Enumeration<Rental> rentals = _rentals.elements();
-        String result = "Rental Record for " + getName() + "\n";
-        while (rentals.hasMoreElements()) {
-            Rental each = rentals.nextElement();
-
-            // Mostra os valores desta locação
-            result += "\t" + each.getMovie().getTitle() + "\t" + each.getCharge() + "\n";
-        }
-
-        // Adiciona linhas finais
-        result += "Amount owed is " + getTotalCharge() + "\n";
-        result += "You earned " + getTotalFrequentRenterPoints() + " frequent renter points";
-        return result;
+    public Enumeration<Rental> getRentals() {
+        return _rentals.elements();
     }
 
-    public String htmlStatement() {
-        Enumeration<Rental> rentals = _rentals.elements();
-        String result = "<H1>Rentals for <EM>" + getName() + "</EM></H1><P>\n";
-        while (rentals.hasMoreElements()) {
-            Rental each = rentals.nextElement();
-            // Mostra os valores desta locação
-            result += each.getMovie().getTitle() + ": " + each.getCharge() + "<BR>\n";
-        }
-
-        // Adiciona linhas finais
-        result += "<P>You owe <EM>" + getTotalCharge() + "</EM><P>\n";
-        result += "On this rental you earned <EM>" + getTotalFrequentRenterPoints() +
-                  "</EM> frequent renter points<P>";
-        return result;
-    }
-
-    private double getTotalCharge() {
+    public double getTotalCharge() {
         double result = 0;
         Enumeration<Rental> rentals = _rentals.elements();
         while (rentals.hasMoreElements()) {
@@ -61,7 +33,7 @@ public class Customer {
         return result;
     }
 
-    private int getTotalFrequentRenterPoints() {
+    public int getTotalFrequentRenterPoints() {
         int result = 0;
         Enumeration<Rental> rentals = _rentals.elements();
         while (rentals.hasMoreElements()) {
@@ -69,5 +41,13 @@ public class Customer {
             result += each.getFrequentRenterPoints();
         }
         return result;
+    }
+
+    public String statement() {
+        return new TextStatement().value(this); // Chama TextStatement
+    }
+
+    public String htmlStatement() {
+        return new HtmlStatement().value(this); // Chama HtmlStatement
     }
 }
