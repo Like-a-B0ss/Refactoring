@@ -38,7 +38,7 @@ public class Movie {
     }
 
     public double getCharge(int daysRented) {
-        return _price.getCharge(daysRented); // Delegação permanece
+        return _price.getCharge(daysRented);
     }
 
     public int getFrequentRenterPoints(int daysRented) {
