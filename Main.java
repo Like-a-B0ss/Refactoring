@@ -17,5 +17,7 @@ public class Main {
 
         // Teste do método statement
         System.out.println(customer.statement());
+        System.out.println(customer.htmlStatement());
+
     }
 }
