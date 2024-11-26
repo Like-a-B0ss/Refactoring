@@ -4,15 +4,13 @@ import java.util.Enumeration;
 
 public abstract class Statement {
     public String value(Customer aCustomer) {
-        String result = headerString(aCustomer); // Chama o método abstrato para o cabeçalho
+        String result = headerString(aCustomer); // Cabeçalho
         Enumeration<Rental> rentals = aCustomer.getRentals();
         while (rentals.hasMoreElements()) {
             Rental each = rentals.nextElement();
-            // Adiciona detalhes de cada locação
-            result += rentalString(each); // Chama o método abstrato para detalhes
+            result += rentalString(each); // Detalhes de cada locação
         }
-        // Adiciona rodapé
-        result += footerString(aCustomer); // Chama o método abstrato para o rodapé
+        result += footerString(aCustomer); // Rodapé
         return result;
     }
 
