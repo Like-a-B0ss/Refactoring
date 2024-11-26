@@ -3,56 +3,62 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 public class Customer {
-    private String _name;
-    private Vector<Rental> _rentals = new Vector<>();
+   private String _name;
+   private Vector<Rental> _rentals = new Vector<>(); // Parametrização do tipo Rental
 
-    public Customer(String name) {
-        _name = name;
-    }
+   public Customer(String name) {
+      _name = name;
+   }
 
-    public void addRental(Rental arg) {
-        _rentals.addElement(arg);
-    }
+   public void addRental(Rental arg) {
+      _rentals.addElement(arg); // O tipo é seguro agora (Rental)
+   }
 
-    public String getName() {
-        return _name;
-    }
+   public String getName() {
+      return _name;
+   }
 
-    public String statement() {
-        Enumeration<Rental> rentals = _rentals.elements();
-        String result = "Rental Record for " + getName() + "\n";
+   public String statement() {
+      double totalAmount = 0;
+      int frequentRenterPoints = 0;
+      Enumeration<Rental> rentals = _rentals.elements(); // Parametrização com Rental
+      String result = "Rental Record for " + getName() + "\n";
+      while (rentals.hasMoreElements()) {
+         Rental each = rentals.nextElement(); // Tipo seguro
+         double thisAmount = amountFor(each); // Chamada ao método extraído
 
-        while (rentals.hasMoreElements()) {
-            Rental each = rentals.nextElement();
+         // Adiciona pontos de locação frequente
+         frequentRenterPoints++;
+         if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) && each.getDaysRented() > 1)
+            frequentRenterPoints++;
 
-            // Mostrar valores para este aluguel
-            result += "\t" + each.getMovie().getTitle() + "\t" +
-                      String.valueOf(each.getCharge()) + "\n";
-        }
+         // Mostra os valores desta locação
+         result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(thisAmount) + "\n";
+         totalAmount += thisAmount;
+      }
+      // Adiciona linhas finais
+      result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
+      result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
+      return result;
+   }
 
-        result += "Amount owed is " + String.valueOf(getTotalCharge()) + "\n";
-        result += "You earned " + String.valueOf(getTotalFrequentRenterPoints()) +
-                  " frequent renter points";
-        return result;
-    }
-
-    private double getTotalCharge() {
-        double result = 0;
-        Enumeration<Rental> rentals = _rentals.elements();
-        while (rentals.hasMoreElements()) {
-            Rental each = rentals.nextElement();
-            result += each.getCharge();
-        }
-        return result;
-    }
-
-    private int getTotalFrequentRenterPoints() {
-        int result = 0;
-        Enumeration<Rental> rentals = _rentals.elements();
-        while (rentals.hasMoreElements()) {
-            Rental each = rentals.nextElement();
-            result += each.getFrequentRenterPoints();
-        }
-        return result;
-    }
+   private double amountFor(Rental each) {
+      double thisAmount = 0;
+      switch (each.getMovie().getPriceCode()) {
+         case Movie.REGULAR:
+            thisAmount += 2;
+            if (each.getDaysRented() > 2) 
+               thisAmount += (each.getDaysRented() - 2) * 1.5;
+            break;
+         case Movie.NEW_RELEASE:
+            thisAmount += each.getDaysRented() * 3;
+            break;
+         case Movie.CHILDRENS:
+            thisAmount += 1.5;
+            if (each.getDaysRented() > 3) 
+               thisAmount += (each.getDaysRented() - 3) * 1.5;
+            break;
+      }
+      return thisAmount;
+   }
 }
