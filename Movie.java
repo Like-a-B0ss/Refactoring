@@ -38,10 +38,10 @@ public class Movie {
     }
 
     public double getCharge(int daysRented) {
-        return _price.getCharge(daysRented); // Delega ao objeto _price
+        return _price.getCharge(daysRented); // Delegação permanece
     }
 
     public int getFrequentRenterPoints(int daysRented) {
-        return _price.getFrequentRenterPoints(daysRented); // Delega ao objeto _price
+        return _price.getFrequentRenterPoints(daysRented);
     }
 }
