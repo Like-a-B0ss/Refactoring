@@ -26,7 +26,6 @@ public class Customer {
         String result = "Rental Record for " + getName() + "\n";
         while (rentals.hasMoreElements()) {
             Rental each = rentals.nextElement();
-            double thisAmount = each.getCharge(); // Atualizada a chamada para o método getCharge
 
             // Adiciona pontos de locação frequente
             frequentRenterPoints++;
@@ -35,8 +34,8 @@ public class Customer {
             }
 
             // Mostra os valores desta locação
-            result += "\t" + each.getMovie().getTitle() + "\t" + thisAmount + "\n";
-            totalAmount += thisAmount;
+            result += "\t" + each.getMovie().getTitle() + "\t" + each.getCharge() + "\n";
+            totalAmount += each.getCharge();
         }
         // Adiciona linhas finais
         result += "Amount owed is " + totalAmount + "\n";
