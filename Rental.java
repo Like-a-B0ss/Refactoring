@@ -1,5 +1,4 @@
 package Refactoring;
-
 public class Rental {
     private Movie _movie;
     private int _daysRented;
@@ -17,25 +16,16 @@ public class Rental {
         return _movie;
     }
 
+    // Adicionando o método getCharge()
     public double getCharge() {
-        double thisAmount = 0;
-        switch (_movie.getPriceCode()) {
-            case Movie.REGULAR:
-                thisAmount += 2;
-                if (_daysRented > 2) {
-                    thisAmount += (_daysRented - 2) * 1.5;
-                }
-                break;
-            case Movie.NEW_RELEASE:
-                thisAmount += _daysRented * 3;
-                break;
-            case Movie.CHILDRENS:
-                thisAmount += 1.5;
-                if (_daysRented > 3) {
-                    thisAmount += (_daysRented - 3) * 1.5;
-                }
-                break;
+        return _movie.getCharge(_daysRented);
+    }
+
+    // Adicionando o método getFrequentRenterPoints()
+    public int getFrequentRenterPoints() {
+        if (_movie.getPriceCode() == Movie.NEW_RELEASE && _daysRented > 1) {
+            return 2;
         }
-        return thisAmount;
+        return 1;
     }
 }
