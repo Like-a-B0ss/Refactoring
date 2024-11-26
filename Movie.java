@@ -1,4 +1,5 @@
 package Refactoring;
+
 public class Movie {
     public static final int CHILDRENS = 2;
     public static final int REGULAR = 0;
@@ -24,7 +25,7 @@ public class Movie {
         return _title;
     }
 
-    public double getCharge(int daysRented) {
+    public double getCharge(int daysRented) { // Método movido e extraído
         double result = 0;
         switch (_priceCode) {
             case REGULAR:
