@@ -25,7 +25,7 @@ public class Movie {
         return _title;
     }
 
-    public double getCharge(int daysRented) { // Método movido e extraído
+    public double getCharge(int daysRented) {
         double result = 0;
         switch (_priceCode) {
             case REGULAR:
@@ -43,5 +43,12 @@ public class Movie {
                 break;
         }
         return result;
+    }
+
+    public int getFrequentRenterPoints(int daysRented) { // Método movido e extraído
+        if (_priceCode == NEW_RELEASE && daysRented > 1) {
+            return 2;
+        }
+        return 1;
     }
 }

@@ -17,14 +17,11 @@ public class Rental {
         return _movie;
     }
 
-    public double getCharge() { // Método atualizado
+    public double getCharge() {
         return _movie.getCharge(_daysRented);
     }
 
-    public int getFrequentRenterPoints() {
-        if (_movie.getPriceCode() == Movie.NEW_RELEASE && _daysRented > 1) {
-            return 2; // Bônus para novos lançamentos alugados por mais de 1 dia
-        }
-        return 1; // Padrão
+    public int getFrequentRenterPoints() { // Método atualizado
+        return _movie.getFrequentRenterPoints(_daysRented);
     }
 }
