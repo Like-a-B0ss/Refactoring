@@ -27,11 +27,8 @@ public class Customer {
         while (rentals.hasMoreElements()) {
             Rental each = rentals.nextElement();
 
-            // Adiciona pontos de locação frequente
-            frequentRenterPoints++;
-            if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) && each.getDaysRented() > 1) {
-                frequentRenterPoints++;
-            }
+            // Atualizada a chamada para obter pontos de locação frequente
+            frequentRenterPoints += each.getFrequentRenterPoints();
 
             // Mostra os valores desta locação
             result += "\t" + each.getMovie().getTitle() + "\t" + each.getCharge() + "\n";
